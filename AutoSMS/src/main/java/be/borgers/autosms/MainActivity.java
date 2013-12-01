@@ -4,20 +4,16 @@ import android.app.ListActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 
 import be.borgers.autosms.db.SMSEntryDBHelper;
 
 public class MainActivity extends ListActivity {
     private static final int REQUEST_ADD = 1;
-    public static final String ACTION_SMS_SENT = "be.borgers.autosms.SMS_SENT";
 
     private SMSEntryDBHelper dbHelper;
     private SMSEntryAdapter adapter;
@@ -28,7 +24,6 @@ public class MainActivity extends ListActivity {
         dbHelper = new SMSEntryDBHelper(this);
         getListView().setEmptyView(findViewById(android.R.id.empty));
         updateAdapter();
-        setUpReceiver();
         setupSwipeToDismiss();
     }
 
@@ -61,19 +56,6 @@ public class MainActivity extends ListActivity {
         }
     }
 
-    private void setUpReceiver() {
-        registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Toast.makeText(
-                        MainActivity.this,
-                        getResultCode() == RESULT_OK ? R.string.textsent : R.string.textsenterror,
-                        Toast.LENGTH_LONG
-                ).show();
-            }
-        }, new IntentFilter(ACTION_SMS_SENT));
-    }
-
     private void setupSwipeToDismiss() {
         SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
@@ -86,7 +68,7 @@ public class MainActivity extends ListActivity {
 
                             @Override
                             public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                for(int i : reverseSortedPositions){
+                                for (int i : reverseSortedPositions) {
                                     dbHelper.remove(adapter.getItem(i));
                                 }
                                 updateAdapter();
@@ -94,5 +76,16 @@ public class MainActivity extends ListActivity {
                         });
         getListView().setOnTouchListener(touchListener);
         getListView().setOnScrollListener(touchListener.makeScrollListener());
+    }
+
+    public static class TextSentReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(
+                    context,
+                    getResultCode() == RESULT_OK ? R.string.textsent : R.string.textsenterror,
+                    Toast.LENGTH_LONG
+            ).show();
+        }
     }
 }

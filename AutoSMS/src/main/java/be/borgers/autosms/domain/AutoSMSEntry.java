@@ -34,4 +34,14 @@ public class AutoSMSEntry {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "AutoSMSEntry{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", text='" + text + '\'' +
+                '}';
+    }
 }
