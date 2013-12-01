@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AutoSMS</string>
+    <string name="title_activity_add">Add new entry</string>
+    <string name="send">Send</string>
+    <string name="sending">Sending</string>
+    <string name="sendingtext">Sending text</string>
+    <string name="textsent">Text succesfully sent</string>
+    <string name="textsenterror">Error when sending text</string>
+    <string name="selectnumber">Select a number</string>
+    <string name="hintname">Name</string>
+    <string name="hintnumber">Number</string>
+    <string name="hintmessage">Message</string>
+</resources>
