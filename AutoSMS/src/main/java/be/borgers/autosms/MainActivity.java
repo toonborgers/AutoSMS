@@ -1,37 +1,41 @@
 package be.borgers.autosms;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import be.borgers.autosms.db.SMSEntryDBHelper;
+import be.borgers.autosms.domain.AutoSMSEntry;
+import de.timroes.android.listview.EnhancedListView;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends Activity {
     private static final int REQUEST_ADD = 1;
 
     private SMSEntryDBHelper dbHelper;
     private SMSEntryAdapter adapter;
+    private EnhancedListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         dbHelper = new SMSEntryDBHelper(this);
-        getListView().setEmptyView(findViewById(android.R.id.empty));
+        listView = (EnhancedListView) findViewById(R.id.main_list);
+
         updateAdapter();
-        setupSwipeToDismiss();
+        setUpSwipeyStuff();
     }
 
-    private void updateAdapter() {
-        adapter = new SMSEntryAdapter(this, dbHelper.getEntries());
-        getListView().setAdapter(adapter);
+    @Override
+    protected void onStop() {
+        listView.discardUndo();
+        super.onStop();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,26 +60,31 @@ public class MainActivity extends ListActivity {
         }
     }
 
-    private void setupSwipeToDismiss() {
-        SwipeDismissListViewTouchListener touchListener =
-                new SwipeDismissListViewTouchListener(
-                        getListView(),
-                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
-                            @Override
-                            public boolean canDismiss(int position) {
-                                return true;
-                            }
+    private void updateAdapter() {
+        adapter = new SMSEntryAdapter(this, dbHelper.getEntries());
+        listView.setAdapter(adapter);
+    }
 
-                            @Override
-                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                for (int i : reverseSortedPositions) {
-                                    dbHelper.remove(adapter.getItem(i));
-                                }
-                                updateAdapter();
-                            }
-                        });
-        getListView().setOnTouchListener(touchListener);
-        getListView().setOnScrollListener(touchListener.makeScrollListener());
+    private void setUpSwipeyStuff() {
+        listView.setDismissCallback(new EnhancedListView.OnDismissCallback() {
+            @Override
+            public EnhancedListView.Undoable onDismiss(EnhancedListView enhancedListView, final int postition) {
+                final AutoSMSEntry item = adapter.getItem(postition);
+                adapter.remove(item);
+                dbHelper.remove(item);
+                return new EnhancedListView.Undoable() {
+                    @Override
+                    public void undo() {
+                        adapter.insert(item, postition);
+                        dbHelper.addEntry(item);
+                    }
+                };
+            }
+        });
+        listView.enableSwipeToDismiss();
+        listView.setSwipingLayout(R.layout.entries_item);
+        listView.setUndoStyle(EnhancedListView.UndoStyle.COLLAPSED_POPUP);
+        listView.setSwipeDirection(EnhancedListView.SwipeDirection.BOTH);
     }
 
     public static class TextSentReceiver extends BroadcastReceiver {

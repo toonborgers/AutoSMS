@@ -19,6 +19,9 @@ public class SMSEntryDBHelper extends SQLiteOpenHelper {
 
     public void addEntry(AutoSMSEntry entry) {
         ContentValues contentValues = new ContentValues();
+        if (entry.getId() > 0) {
+            contentValues.put(SMSContract.AutoSMSEntries._ID, entry.getId());
+        }
         contentValues.put(SMSContract.AutoSMSEntries.COL_NAME, entry.getName());
         contentValues.put(SMSContract.AutoSMSEntries.COL_NUMBER, entry.getNumber());
         contentValues.put(SMSContract.AutoSMSEntries.COL_TEXT, entry.getText());

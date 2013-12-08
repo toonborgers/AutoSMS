@@ -10,12 +10,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/et_naam"
         android:inputType="text"
+        android:maxLength="30"
         android:hint="@string/hintname"
         android:layout_marginBottom="10dp"/>
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/et_nummer"
+        android:maxLength="30"
         android:inputType="phone"
         android:hint="@string/hintnumber"
         android:layout_marginBottom="10dp"/>

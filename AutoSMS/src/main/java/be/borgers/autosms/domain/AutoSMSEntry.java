@@ -14,9 +14,7 @@ public class AutoSMSEntry {
     }
 
     public AutoSMSEntry(String name, String number, String text) {
-        this.name = name;
-        this.number = number;
-        this.text = text;
+        this(-1, name, number, text);
     }
 
     public String getName() {
