@@ -45,6 +45,25 @@ public class SMSEntryDBHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public AutoSMSEntry getEntry(int id) {
+        Cursor cursor = getReadableDatabase().query(SMSContract.AutoSMSEntries.TABLE_NAME,
+                null,
+                SMSContract.AutoSMSEntries._ID + "=?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null);
+        if (cursor.moveToFirst()) {
+            int entryId = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String number = cursor.getString(2);
+            String text = cursor.getString(3);
+            return new AutoSMSEntry(entryId, name, number, text);
+        }
+
+        return null;
+    }
+
     public void remove(AutoSMSEntry item) {
         getWritableDatabase().delete(SMSContract.AutoSMSEntries.TABLE_NAME,
                 SMSContract.AutoSMSEntries._ID + "=?",
@@ -67,6 +86,5 @@ public class SMSEntryDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-
     }
 }

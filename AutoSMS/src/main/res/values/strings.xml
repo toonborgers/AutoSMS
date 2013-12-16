@@ -12,4 +12,8 @@
     <string name="hintname">Name</string>
     <string name="hintnumber">Number</string>
     <string name="hintmessage">Message</string>
+    <string name="title_activity_widget_configure">WidgetConfigure</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

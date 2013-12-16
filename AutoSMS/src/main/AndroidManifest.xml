@@ -27,13 +27,32 @@
         </activity>
         <activity
             android:name="be.borgers.autosms.AddActivity"
-            android:label="@string/title_activity_add"></activity>
+            android:label="@string/title_activity_add" />
 
-        <receiver android:name=".MainActivity$TextSentReceiver">
+        <receiver android:name="be.borgers.autosms.MainActivity$TextSentReceiver">
             <intent-filter>
                 <action android:name="be.borgers.autosms.SMS_SENT" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name="be.borgers.autosms.widget.WidgetProvider"
+            android:label="AutoSMS">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+
+        <activity
+            android:name="be.borgers.autosms.widget.WidgetConfigure"
+            android:label="@string/title_activity_widget_configure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
