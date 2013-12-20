@@ -32,6 +32,16 @@ public class WidgetConfigure extends ListActivity {
         setUpList();
     }
 
+    private void getAppWidgetId() {
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mAppWidgetId = extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID,
+                    AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
+    }
+
     private void setUpList() {
         entries = new SMSEntryDBHelper(this).getEntries();
         List<String> names = new ArrayList<String>();
@@ -47,30 +57,17 @@ public class WidgetConfigure extends ListActivity {
         });
     }
 
-    private void getAppWidgetId() {
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            mAppWidgetId = extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
-        }
-    }
 
     private void close(int position) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_layout);
-        views.setOnClickPendingIntent(R.id.thebutton, clickIntent(getApplicationContext(), position));
-        views.setTextViewText(R.id.widget_label, selectedEntry(position).getName());
+        views.setOnClickPendingIntent(R.id.widget_button, clickIntent(getApplicationContext(), position));
+        views.setTextViewText(R.id.widget_label, entries.get(position).getName());
         appWidgetManager.updateAppWidget(mAppWidgetId, views);
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
         setResult(RESULT_OK, resultValue);
         finish();
-    }
-
-    private AutoSMSEntry selectedEntry(int position) {
-        return entries.get(position);
     }
 
     private PendingIntent clickIntent(Context context, int position) {

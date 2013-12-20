@@ -5,33 +5,37 @@
     android:layout_height="match_parent"
     tools:context=".AddActivity"
     android:orientation="vertical">
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_naam"
+        android:id="@+id/add_et_naam"
         android:inputType="text"
         android:maxLength="30"
-        android:hint="@string/hintname"
-        android:layout_marginBottom="10dp"/>
+        android:hint="@string/add_hint_name"
+        android:layout_marginBottom="10dp" />
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_nummer"
+        android:id="@+id/add_et_nummer"
         android:maxLength="30"
         android:inputType="phone"
-        android:hint="@string/hintnumber"
-        android:layout_marginBottom="10dp"/>
+        android:hint="@string/add_hint_number"
+        android:layout_marginBottom="10dp" />
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:id="@+id/et_bericht"
+        android:id="@+id/add_et_bericht"
         android:inputType="textMultiLine"
-        android:hint="@string/hintmessage"
+        android:hint="@string/add_hint_message"
         android:maxLength="160"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp" />
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/store"
-        android:text="Voeg toe"/>
+        android:id="@+id/add_bt_store"
+        android:text="@string/add_add_item" />
 </LinearLayout>

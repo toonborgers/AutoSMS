@@ -10,7 +10,7 @@
     android:paddingTop="2dp">
 
     <TextView
-        android:id="@+id/tv_entry_naam"
+        android:id="@+id/main_list_item_tv_naam"
         android:paddingLeft="5dp"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -19,7 +19,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageButton
-        android:id="@+id/bt_entry_send"
+        android:id="@+id/main_list_item_bt_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_send"

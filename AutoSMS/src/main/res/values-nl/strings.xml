@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AutoSMS</string>
+
+    <string name="add_activity_title">Nieuw item toevoegen</string>
+    <string name="add_fill_in_all_fields">Alle velden invullen aub</string>
+    <string name="add_hint_name">Naam</string>
+    <string name="add_hint_number">Nummer</string>
+    <string name="add_hint_message">Bericht</string>
+    <string name="add_select_number">Kies een nummer</string>
+    <string name="add_add_item">Item toevoegen</string>
+
+    <string name="textsent">Bericht verzonden</string>
+    <string name="textsenterror">Fout bij het verzenden van het bericht</string>
+
+    <string name="configure_activity_title">Widget configureren</string>
+</resources>

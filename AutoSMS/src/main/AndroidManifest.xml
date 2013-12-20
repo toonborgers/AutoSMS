@@ -9,11 +9,15 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <!--For selecting a contect in the Add Activity-->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!--Only for phones-->
+    <uses-feature android:name="android.hardware.telephony" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/launcher_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -21,19 +25,19 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="be.borgers.autosms.AddActivity"
-            android:label="@string/title_activity_add" />
+            android:label="@string/add_activity_title" />
 
-        <receiver android:name="be.borgers.autosms.MainActivity$TextSentReceiver">
+        <receiver android:name="be.borgers.autosms.TextSentReceiver">
             <intent-filter>
                 <action android:name="be.borgers.autosms.SMS_SENT" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name="be.borgers.autosms.widget.WidgetProvider"
             android:label="AutoSMS">
@@ -48,7 +52,7 @@
 
         <activity
             android:name="be.borgers.autosms.widget.WidgetConfigure"
-            android:label="@string/title_activity_widget_configure">
+            android:label="@string/configure_activity_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

@@ -7,14 +7,14 @@
     android:background="#00ffffff">
 
     <ImageButton
-        android:id="@+id/thebutton"
+        android:id="@+id/widget_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/launcher_icon" />
 
     <TextView
+        android:id="@+id/widget_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/widget_label"
         android:gravity="center" />
 </LinearLayout>

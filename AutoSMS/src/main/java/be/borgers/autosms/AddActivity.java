@@ -9,46 +9,51 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import be.borgers.autosms.db.SMSEntryDBHelper;
 import be.borgers.autosms.domain.AutoSMSEntry;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class AddActivity extends Activity {
     private static final int GET_CONTACT = 1;
 
-    private EditText et_naam;
-    private EditText et_nummer;
-    private EditText et_bericht;
+    @InjectView(R.id.add_et_naam)
+    EditText et_naam;
+    @InjectView(R.id.add_et_nummer)
+    EditText et_nummer;
+    @InjectView(R.id.add_et_bericht)
+    EditText et_bericht;
     private SMSEntryDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        ButterKnife.inject(this);
+
         dbHelper = new SMSEntryDBHelper(this);
+    }
 
-        et_naam = (EditText) findViewById(R.id.et_naam);
-        et_nummer = (EditText) findViewById(R.id.et_nummer);
-        et_bericht = (EditText) findViewById(R.id.et_bericht);
-        Button storeButton = (Button) findViewById(R.id.store);
-        storeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String naam = et_naam.getText().toString();
-                String nummer = et_nummer.getText().toString();
-                String bericht = et_bericht.getText().toString();
+    @OnClick(R.id.add_bt_store)
+    void storeItem() {
+        String naam = et_naam.getText().toString();
+        String nummer = et_nummer.getText().toString();
+        String bericht = et_bericht.getText().toString();
 
-                if (naam.isEmpty() || nummer.isEmpty() || bericht.isEmpty()) {
-                    Toast.makeText(AddActivity.this, "Alle velden invullen aub", Toast.LENGTH_SHORT).show();
-                } else {
-                    storeAndReturn(naam, nummer, bericht);
-                }
-            }
-        });
+        if (naam.isEmpty() || nummer.isEmpty() || bericht.isEmpty()) {
+            Toast.makeText(AddActivity.this, R.string.add_fill_in_all_fields, Toast.LENGTH_SHORT).show();
+        } else {
+            storeAndReturn(naam, nummer, bericht);
+        }
+    }
+
+    private void storeAndReturn(String name, String number, String text) {
+        dbHelper.addEntry(new AutoSMSEntry(name, number, text));
+        finish();
     }
 
     @Override
@@ -105,7 +110,7 @@ public class AddActivity extends Activity {
             et_nummer.setText(numbers[0]);
         } else {
             new AlertDialog.Builder(this)
-                    .setTitle(R.string.selectnumber)
+                    .setTitle(R.string.add_select_number)
                     .setSingleChoiceItems(numbers, 0, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -113,10 +118,5 @@ public class AddActivity extends Activity {
                         }
                     }).show();
         }
-    }
-
-    private void storeAndReturn(String name, String number, String text) {
-        dbHelper.addEntry(new AutoSMSEntry(name, number, text));
-        finish();
     }
 }

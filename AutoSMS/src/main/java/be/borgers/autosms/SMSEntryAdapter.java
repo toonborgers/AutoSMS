@@ -11,6 +11,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import be.borgers.autosms.domain.AutoSMSEntry;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class SMSEntryAdapter extends ArrayAdapter<AutoSMSEntry> {
 
@@ -18,7 +20,7 @@ public class SMSEntryAdapter extends ArrayAdapter<AutoSMSEntry> {
     private LayoutInflater layoutInflater;
 
     public SMSEntryAdapter(Context context, List<AutoSMSEntry> items) {
-        super(context, R.layout.entries_item, items);
+        super(context, R.layout.main_list_item, items);
         this.items = items;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -28,10 +30,8 @@ public class SMSEntryAdapter extends ArrayAdapter<AutoSMSEntry> {
         View rowView = convertView;
 
         if (rowView == null) {
-            rowView = layoutInflater.inflate(R.layout.entries_item, parent, false);
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.nameView = (TextView) rowView.findViewById(R.id.tv_entry_naam);
-            viewHolder.button = (ImageButton) rowView.findViewById(R.id.bt_entry_send);
+            rowView = layoutInflater.inflate(R.layout.main_list_item, parent, false);
+            ViewHolder viewHolder = new ViewHolder(rowView);
             rowView.setTag(viewHolder);
         }
 
@@ -47,8 +47,14 @@ public class SMSEntryAdapter extends ArrayAdapter<AutoSMSEntry> {
         return rowView;
     }
 
-    private static final class ViewHolder {
-        private TextView nameView;
-        private ImageButton button;
+    static final class ViewHolder {
+        @InjectView(R.id.main_list_item_tv_naam)
+        TextView nameView;
+        @InjectView(R.id.main_list_item_bt_send)
+        ImageButton button;
+
+        ViewHolder(View view) {
+            ButterKnife.inject(this, view);
+        }
     }
 }

@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">AutoSMS</string>
-    <string name="title_activity_add">Add new entry</string>
-    <string name="send">Send</string>
-    <string name="sending">Sending</string>
-    <string name="sendingtext">Sending text</string>
+
+    <string name="add_activity_title">Add new entry</string>
+    <string name="add_fill_in_all_fields">Please fill out all fields</string>
+    <string name="add_hint_name">Name</string>
+    <string name="add_hint_number">Number</string>
+    <string name="add_hint_message">Message</string>
+    <string name="add_select_number">Select a number</string>
+    <string name="add_add_item">Add item</string>
+
     <string name="textsent">Text succesfully sent</string>
     <string name="textsenterror">Error when sending text</string>
-    <string name="selectnumber">Select a number</string>
-    <string name="hintname">Name</string>
-    <string name="hintnumber">Number</string>
-    <string name="hintmessage">Message</string>
-    <string name="title_activity_widget_configure">WidgetConfigure</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
 
+    <string name="configure_activity_title">Configure the widget</string>
 </resources>

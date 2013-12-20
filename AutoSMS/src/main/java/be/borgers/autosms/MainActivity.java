@@ -1,31 +1,31 @@
 package be.borgers.autosms;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import be.borgers.autosms.db.SMSEntryDBHelper;
 import be.borgers.autosms.domain.AutoSMSEntry;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import de.timroes.android.listview.EnhancedListView;
 
 public class MainActivity extends Activity {
     private static final int REQUEST_ADD = 1;
 
+    @InjectView(R.id.main_list)
+    EnhancedListView listView;
     private SMSEntryDBHelper dbHelper;
     private SMSEntryAdapter adapter;
-    private EnhancedListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
         dbHelper = new SMSEntryDBHelper(this);
-        listView = (EnhancedListView) findViewById(R.id.main_list);
 
         updateAdapter();
         setUpSwipeyStuff();
@@ -82,19 +82,8 @@ public class MainActivity extends Activity {
             }
         });
         listView.enableSwipeToDismiss();
-        listView.setSwipingLayout(R.layout.entries_item);
+        listView.setSwipingLayout(R.layout.main_list_item);
         listView.setUndoStyle(EnhancedListView.UndoStyle.COLLAPSED_POPUP);
         listView.setSwipeDirection(EnhancedListView.SwipeDirection.BOTH);
-    }
-
-    public static class TextSentReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Toast.makeText(
-                    context,
-                    getResultCode() == RESULT_OK ? R.string.textsent : R.string.textsenterror,
-                    Toast.LENGTH_LONG
-            ).show();
-        }
     }
 }
