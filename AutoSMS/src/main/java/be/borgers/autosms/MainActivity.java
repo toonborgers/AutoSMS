@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import be.borgers.autosms.db.SMSEntryDBHelper;
 import be.borgers.autosms.domain.AutoSMSEntry;
@@ -29,6 +32,13 @@ public class MainActivity extends Activity {
 
         updateAdapter();
         setUpSwipeyStuff();
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(), "Long click", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
     }
 
     @Override
