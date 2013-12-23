@@ -9,9 +9,13 @@
     <string name="add_hint_message">Message</string>
     <string name="add_select_number">Select a number</string>
     <string name="add_add_item">Add item</string>
+    <string name="add_modify_item">Store item</string>
 
     <string name="textsent">Text succesfully sent</string>
     <string name="textsenterror">Error when sending text</string>
 
     <string name="configure_activity_title">Configure the widget</string>
+
+    <string name="menu_delete">Delete</string>
+    <string name="menu_modify">Modify</string>
 </resources>

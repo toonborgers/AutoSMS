@@ -9,9 +9,13 @@
     <string name="add_hint_message">Bericht</string>
     <string name="add_select_number">Kies een nummer</string>
     <string name="add_add_item">Item toevoegen</string>
+    <string name="add_modify_item">Item opslaan</string>
 
     <string name="textsent">Bericht verzonden</string>
     <string name="textsenterror">Fout bij het verzenden van het bericht</string>
 
     <string name="configure_activity_title">Widget configureren</string>
+
+    <string name="menu_delete">Verwijder</string>
+    <string name="menu_modify">Wijzig</string>
 </resources>

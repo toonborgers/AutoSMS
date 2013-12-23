@@ -18,15 +18,16 @@ public class SMSEntryDBHelper extends SQLiteOpenHelper {
     }
 
     public void addEntry(AutoSMSEntry entry) {
-        ContentValues contentValues = new ContentValues();
-        if (entry.getId() > 0) {
-            contentValues.put(AutoSMSContract.SMSEntries._ID, entry.getId());
-        }
-        contentValues.put(AutoSMSContract.SMSEntries.COL_NAME, entry.getName());
-        contentValues.put(AutoSMSContract.SMSEntries.COL_NUMBER, entry.getNumber());
-        contentValues.put(AutoSMSContract.SMSEntries.COL_TEXT, entry.getText());
+        getWritableDatabase()
+                .insert(AutoSMSContract.SMSEntries.TABLE_NAME, null, contentValuesFor(entry));
+    }
 
-        getWritableDatabase().insert(AutoSMSContract.SMSEntries.TABLE_NAME, null, contentValues);
+    public void updateEntry(AutoSMSEntry entry) {
+        getWritableDatabase().update(
+                AutoSMSContract.SMSEntries.TABLE_NAME,
+                contentValuesFor(entry),
+                AutoSMSContract.SMSEntries._ID + "=?",
+                new String[]{String.valueOf(entry.getId())});
     }
 
     public List<AutoSMSEntry> getEntries() {
@@ -86,5 +87,16 @@ public class SMSEntryDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+    }
+
+    private ContentValues contentValuesFor(AutoSMSEntry entry) {
+        ContentValues contentValues = new ContentValues();
+        if (entry.getId() > 0) {
+            contentValues.put(AutoSMSContract.SMSEntries._ID, entry.getId());
+        }
+        contentValues.put(AutoSMSContract.SMSEntries.COL_NAME, entry.getName());
+        contentValues.put(AutoSMSContract.SMSEntries.COL_NUMBER, entry.getNumber());
+        contentValues.put(AutoSMSContract.SMSEntries.COL_TEXT, entry.getText());
+        return contentValues;
     }
 }

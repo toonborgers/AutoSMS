@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main_cab_delete"
+        android:title="@string/menu_delete"
+        android:titleCondensed="@string/menu_delete"
+        android:showAsAction="always" />
+    <item
+        android:id="@+id/main_cab_modify"
+        android:title="@string/menu_modify"
+        android:titleCondensed="@string/menu_modify"
+        android:showAsAction="always" />
+</menu>
