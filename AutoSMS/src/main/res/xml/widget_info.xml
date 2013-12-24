@@ -6,6 +6,7 @@
     android:minWidth="40dp"
     android:updatePeriodMillis="1800000"
     android:resizeMode="none"
-    android:configure="be.borgers.autosms.widget.WidgetConfigure">
+    android:configure="be.borgers.autosms.widget.WidgetConfigure"
+    android:widgetCategory="keyguard|home_screen">
 
 </appwidget-provider> 
