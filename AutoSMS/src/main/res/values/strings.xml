@@ -18,4 +18,5 @@
 
     <string name="menu_delete">Delete</string>
     <string name="menu_modify">Modify</string>
+    <string name="empty_add_item">Click to add an item</string>
 </resources>

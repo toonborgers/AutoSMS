@@ -10,6 +10,7 @@
     <string name="add_select_number">Kies een nummer</string>
     <string name="add_add_item">Item toevoegen</string>
     <string name="add_modify_item">Item opslaan</string>
+    <string name="empty_add_item">Klik om een item toe te voegen</string>
 
     <string name="textsent">Bericht verzonden</string>
     <string name="textsenterror">Fout bij het verzenden van het bericht</string>

@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -43,9 +45,9 @@ public class MainActivity extends Activity {
 
         updateAdapter();
         setUpSwipeyStuff();
+        setUpEmptyView();
         setUpCABStuff();
     }
-
 
     @Override
     protected void onStop() {
@@ -64,12 +66,16 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         if (id == R.id.add) {
-            Intent intent = new Intent(this, ItemDetailActivity.class);
-            intent.putExtra(KEY_REQUEST_TYPE, REQUEST_ADD);
-            startActivityForResult(intent, REQUEST_ADD);
+            startAddingItem();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startAddingItem() {
+        Intent intent = new Intent(this, ItemDetailActivity.class);
+        intent.putExtra(KEY_REQUEST_TYPE, REQUEST_ADD);
+        startActivityForResult(intent, REQUEST_ADD);
     }
 
     @Override
@@ -106,6 +112,15 @@ public class MainActivity extends Activity {
         listView.setSwipingLayout(R.layout.main_list_item);
         listView.setUndoStyle(EnhancedListView.UndoStyle.COLLAPSED_POPUP);
         listView.setSwipeDirection(EnhancedListView.SwipeDirection.BOTH);
+    }
+
+    private void setUpEmptyView() {
+        View empty = findViewById(R.id.emptyView);
+        Button buttonAdd = (Button) empty.findViewById(R.id.main_btn_add);
+        buttonAdd.setOnClickListener(new EmptyButtonClickListener());
+        ImageButton imgButtonAdd = (ImageButton) empty.findViewById(R.id.main_imgbtn_add);
+        imgButtonAdd.setOnClickListener(new EmptyButtonClickListener());
+        listView.setEmptyView(empty);
     }
 
     private void modify(AutoSMSEntry autoSMSEntry) {
@@ -205,4 +220,11 @@ public class MainActivity extends Activity {
         }
     }
 
+    private class EmptyButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            startAddingItem();
+        }
+    }
 }

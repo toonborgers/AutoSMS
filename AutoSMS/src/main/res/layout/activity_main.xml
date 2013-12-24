@@ -5,6 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/emptyView">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/main_imgbtn_add"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:src="@drawable/empty_image"
+                android:scaleType="fitCenter"
+                android:background="@color/transparent" />
+
+            <Button
+                android:id="@+id/main_btn_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="@string/empty_add_item" />
+        </LinearLayout>
+    </FrameLayout>
+
     <de.timroes.android.listview.EnhancedListView
         android:id="@+id/main_list"
         android:layout_width="match_parent"
