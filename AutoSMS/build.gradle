@@ -27,12 +27,28 @@ android {
         minSdkVersion 14
         targetSdkVersion 19
     }
-    buildTypes {
+
+    signingConfigs {
         release {
-            runProguard true
+            /*Key alias: autosms*/
+            storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
+            storePassword System.console().readLine("\n\$ Enter keystore password: ")
+            keyAlias System.console().readLine("\n\$ Enter key alias: ")
+            keyPassword System.console().readLine("\n\$ Enter key password: ")
+        }
+    }
+
+    buildTypes {
+        debug {
+
+        }
+        release {
+            signingConfig signingConfigs.release
+            runProguard false
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
+
     productFlavors {
         defaultFlavor {
             proguardFile 'proguard-rules.txt'
