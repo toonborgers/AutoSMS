@@ -31,10 +31,12 @@ android {
     signingConfigs {
         release {
             /*Key alias: autosms*/
-            storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
-            storePassword System.console().readLine("\n\$ Enter keystore password: ")
-            keyAlias System.console().readLine("\n\$ Enter key alias: ")
-            keyPassword System.console().readLine("\n\$ Enter key password: ")
+            if (System.console() != null) {
+                storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
+                storePassword System.console().readLine("\n\$ Enter keystore password: ")
+                keyAlias System.console().readLine("\n\$ Enter key alias: ")
+                keyPassword System.console().readLine("\n\$ Enter key password: ")
+            }
         }
     }
 
@@ -61,5 +63,4 @@ dependencies {
     compile 'de.timroes.android:EnhancedListView:0.1.2@aar'
     compile 'com.jakewharton:butterknife:4.0.1'
     compile 'com.crashlytics.android:crashlytics:1.+'
-
 }
