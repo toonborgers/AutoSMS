@@ -10,6 +10,7 @@
     <string name="add_select_number">Select a number</string>
     <string name="add_add_item">Add item</string>
     <string name="add_modify_item">Store item</string>
+    <string name="empty_add_item">Click to add an item</string>
 
     <string name="textsent">Text succesfully sent</string>
     <string name="textsenterror">Error when sending text</string>
@@ -18,5 +19,7 @@
 
     <string name="menu_delete">Delete</string>
     <string name="menu_modify">Modify</string>
-    <string name="empty_add_item">Click to add an item</string>
+
+    <string name="contacts_done">DONE</string>
+    <string name="select_contacts_activity_title">Select contacts</string>
 </resources>

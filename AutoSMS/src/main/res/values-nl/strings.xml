@@ -19,4 +19,7 @@
 
     <string name="menu_delete">Verwijder</string>
     <string name="menu_modify">Wijzig</string>
+
+    <string name="contacts_done">KLAAR</string>
+    <string name="select_contacts_activity_title">Selecteer contacten</string>
 </resources>

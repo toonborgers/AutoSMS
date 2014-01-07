@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.borgers.autosms.async.SendSMSTask;
 import be.borgers.autosms.domain.AutoSMSEntry;
 import butterknife.ButterKnife;
 import butterknife.InjectView;

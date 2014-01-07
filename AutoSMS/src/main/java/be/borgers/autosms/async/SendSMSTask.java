@@ -1,4 +1,4 @@
-package be.borgers.autosms;
+package be.borgers.autosms.async;
 
 import android.app.PendingIntent;
 import android.content.Context;

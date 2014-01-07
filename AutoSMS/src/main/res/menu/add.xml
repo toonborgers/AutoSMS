@@ -4,4 +4,7 @@
     <item android:id="@+id/contact"
         android:icon="@drawable/contact"
         android:showAsAction="ifRoom" />
+    <item android:id="@+id/contacts"
+        android:title="test"
+        android:showAsAction="ifRoom" />
 </menu>

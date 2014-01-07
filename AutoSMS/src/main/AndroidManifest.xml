@@ -2,48 +2,47 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="be.borgers.autosms"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <!--For selecting a contect in the Add Activity-->
+    <!-- For selecting a contect in the Add Activity -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--For sending crash reports -->
+    <!-- For sending crash reports -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--Only for phones-->
+    <!-- Only for phones -->
     <uses-feature android:name="android.hardware.telephony" />
-
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/launcher_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="be.borgers.autosms.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ItemDetailActivity"
+            android:name="be.borgers.autosms.ItemDetailActivity"
             android:label="@string/add_activity_title" />
 
-        <receiver android:name="be.borgers.autosms.TextSentReceiver">
+        <receiver android:name="be.borgers.autosms.TextSentReceiver" >
             <intent-filter>
                 <action android:name="be.borgers.autosms.SMS_SENT" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="be.borgers.autosms.widget.WidgetProvider"
-            android:label="AutoSMS">
+            android:label="AutoSMS" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -55,14 +54,20 @@
 
         <activity
             android:name="be.borgers.autosms.widget.WidgetConfigure"
-            android:label="@string/configure_activity_title">
+            android:label="@string/configure_activity_title" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="7c32de8c73db77277f0041a37e219e8063905a45" />
+
+        <activity
+            android:name="be.borgers.autosms.SelectContactsActivity"
+            android:label="@string/select_contacts_activity_title" >
+        </activity>
     </application>
 
 </manifest>

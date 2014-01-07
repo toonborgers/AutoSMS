@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 
-import be.borgers.autosms.SendSMSTask;
+import be.borgers.autosms.async.SendSMSTask;
 import be.borgers.autosms.db.SMSEntryDBHelper;
 import be.borgers.autosms.domain.AutoSMSEntry;
 
