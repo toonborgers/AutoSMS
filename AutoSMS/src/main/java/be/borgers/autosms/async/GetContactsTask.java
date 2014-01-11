@@ -36,7 +36,6 @@ public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
     protected Set<Contact> doInBackground(Void... voids) {
         Map<Long, Contact> contactsTmp = new HashMap<Long, Contact>();
         List<String> contactIds = new ArrayList<String>();
-        String filterPlaceholder = "";
         Cursor contactsCursor = queryContacts();
         for (contactsCursor.moveToFirst(); !contactsCursor.isAfterLast(); contactsCursor.moveToNext()) {
             int indexId = contactsCursor.getColumnIndex(ContactsContract.Contacts._ID);
@@ -53,12 +52,11 @@ public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
             }
             contactsTmp.put(contactId, new Contact(contactId, contactName, photoUri, hasPhoto));
             contactIds.add(contactId.toString());
-            filterPlaceholder += ",?";
         }
         contactsCursor.close();
         filterPlaceholder = filterPlaceholder.substring(1);
         Set<Contact> contacts = new TreeSet<Contact>();
-        SetMultimap<Long, String> numbers = getNumbers(contactIds, filterPlaceholder);
+        SetMultimap<Long, String> numbers = getNumbers(contactIds);
         for (Long contactId : numbers.keySet()) {
             Contact contact = contactsTmp.get(contactId);
             for (String number : numbers.get(contactId)) {
@@ -88,12 +86,12 @@ public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
         return context.getContentResolver().query(uri, projection, filter, filterArgs, null);
     }
 
-    private SetMultimap<Long, String> getNumbers(List<String> contactIds, String filterPlaceholder) {
+    private SetMultimap<Long, String> getNumbers(List<String> contactIds) {
         SetMultimap<Long, String> result = TreeMultimap.create();
         Cursor phones = context.getContentResolver().query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 null,
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " in (" + filterPlaceholder + ")",
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " in (" + filterPlaceholder(contactIds.size()) + ")",
                 contactIds.toArray(new String[contactIds.size()]),
                 null);
         phones.moveToFirst();
@@ -103,6 +101,19 @@ public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
             result.put(contactId, number);
         }
         phones.close();
+
+        return result;
+    }
+
+    private String filterPlaceholder(int count) {
+        String result = "";
+
+        if (count > 0) {
+            for (int i = 1; i < count; i++) {
+                result += ",?"
+            }
+            result = result.substring(1);
+        }
 
         return result;
     }

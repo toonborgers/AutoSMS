@@ -32,7 +32,7 @@ android {
             if (System.console() != null) {
                 storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
                 storePassword System.console().readLine("\n\$ Enter keystore password: ")
-                keyAlias System.console().readLine("\n\$ Enter key alias: ")
+                keyAlias "autosms"
                 keyPassword System.console().readLine("\n\$ Enter key password: ")
             }
         }

@@ -6,20 +6,12 @@ public class Contact implements Comparable<Contact>{
     private long id;
     private String name;
     private String number;
-    private boolean hasPhoto;
+    private boolean hasPhoto = false;
     private Uri photoUri;
 
-    public Contact(long id, String name,String number, Uri photoUri, boolean hasPhoto) {
-        this.id = id;
-        this.number = number;
-        this.hasPhoto = hasPhoto;
-        this.photoUri = photoUri;
-        this.name = name;
-    }
+   private Contact(){
 
-    public Contact(long id, String name, Uri photoUri, boolean hasPhoto) {
-       this(id, name, null, photoUri, hasPhoto);
-    }
+   }
 
     public long getId() {
         return id;
@@ -75,5 +67,39 @@ public class Contact implements Comparable<Contact>{
         result = 31 * result + (hasPhoto ? 1 : 0);
         result = 31 * result + (photoUri != null ? photoUri.hashCode() : 0);
         return result;
+    }
+
+    public static class Builder{
+        private Contact instance;
+
+        public Builder(){
+            instance = new Contact();
+        }
+
+        public Builder(Builder base){
+            this.instance = base.instance;
+        }
+
+        public Builder withId(Long id){
+            instance.id = id;
+            return this;
+        }
+
+        public Builder withName(String name){
+            instance.name = name;
+        }
+
+        public Builder withNumber(String number){
+            instance.number = number;
+        }
+
+        public Builder withPhotoUri(Uri photoUri){
+            instance.photoUri = photoUri;
+            instance.hasPhoto = true;
+        }
+
+        public Contact build(){
+            return instance;
+        }
     }
 }
