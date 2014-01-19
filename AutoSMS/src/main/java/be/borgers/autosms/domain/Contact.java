@@ -2,16 +2,16 @@ package be.borgers.autosms.domain;
 
 import android.net.Uri;
 
-public class Contact implements Comparable<Contact>{
+public class Contact implements Comparable<Contact> {
     private long id;
     private String name;
     private String number;
     private boolean hasPhoto = false;
     private Uri photoUri;
 
-   private Contact(){
+    private Contact() {
 
-   }
+    }
 
     public long getId() {
         return id;
@@ -33,13 +33,10 @@ public class Contact implements Comparable<Contact>{
         return photoUri;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     @Override
     public int compareTo(Contact contact) {
-        return getName().compareTo(contact.getName());
+        return getName().compareTo(contact.getName()) == 0 ?
+                1 : getName().compareTo(contact.getName());
     }
 
     @Override
@@ -69,36 +66,46 @@ public class Contact implements Comparable<Contact>{
         return result;
     }
 
-    public static class Builder{
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", hasPhoto=" + hasPhoto +
+                ", photoUri=" + photoUri +
+                '}';
+    }
+
+    public static class Builder {
         private Contact instance;
 
-        public Builder(){
+        public Builder() {
             instance = new Contact();
         }
 
-        public Builder(Builder base){
-            this.instance = base.instance;
-        }
-
-        public Builder withId(Long id){
+        public Builder withId(Long id) {
             instance.id = id;
             return this;
         }
 
-        public Builder withName(String name){
+        public Builder withName(String name) {
             instance.name = name;
+            return this;
         }
 
-        public Builder withNumber(String number){
+        public Builder withNumber(String number) {
             instance.number = number;
+            return this;
         }
 
-        public Builder withPhotoUri(Uri photoUri){
+        public Builder withPhotoUri(Uri photoUri) {
             instance.photoUri = photoUri;
-            instance.hasPhoto = true;
+            instance.hasPhoto = photoUri != null;
+            return this;
         }
 
-        public Contact build(){
+        public Contact build() {
             return instance;
         }
     }

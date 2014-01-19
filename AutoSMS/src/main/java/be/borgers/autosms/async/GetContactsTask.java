@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
-import android.util.Log;
 
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.TreeMultimap;
@@ -20,6 +19,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import be.borgers.autosms.domain.Contact;
+import be.borgers.autosms.domain.ContactBuilderFactory;
 
 public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
     private static final String TAG = GetContactsTask.class.getSimpleName();
@@ -34,7 +34,8 @@ public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
 
     @Override
     protected Set<Contact> doInBackground(Void... voids) {
-        Map<Long, Contact> contactsTmp = new HashMap<Long, Contact>();
+        Long start = System.currentTimeMillis();
+        Map<Long, Contact.Builder> contactsTmp = new HashMap<Long, Contact.Builder>();
         List<String> contactIds = new ArrayList<String>();
         Cursor contactsCursor = queryContacts();
         for (contactsCursor.moveToFirst(); !contactsCursor.isAfterLast(); contactsCursor.moveToNext()) {
@@ -50,20 +51,24 @@ public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
             if (hasPhoto) {
                 photoUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, photoId);
             }
-            contactsTmp.put(contactId, new Contact(contactId, contactName, photoUri, hasPhoto));
+            Contact.Builder builder = new Contact.Builder()
+                    .withId(contactId)
+                    .withName(contactName)
+                    .withPhotoUri(photoUri);
+            contactsTmp.put(contactId, builder);
             contactIds.add(contactId.toString());
         }
         contactsCursor.close();
-        filterPlaceholder = filterPlaceholder.substring(1);
         Set<Contact> contacts = new TreeSet<Contact>();
         SetMultimap<Long, String> numbers = getNumbers(contactIds);
         for (Long contactId : numbers.keySet()) {
-            Contact contact = contactsTmp.get(contactId);
+            Contact.Builder builder = contactsTmp.get(contactId);
             for (String number : numbers.get(contactId)) {
-                contacts.add(new Contact(contactId, contact.getName(), number, contact.getPhotoUri(), contact.hasPhoto()));
+                contacts.add(ContactBuilderFactory.basedOn(builder)
+                        .withNumber(number)
+                        .build());
             }
         }
-
         return contacts;
     }
 
@@ -109,8 +114,8 @@ public class GetContactsTask extends AsyncTask<Void, Void, Set<Contact>> {
         String result = "";
 
         if (count > 0) {
-            for (int i = 1; i < count; i++) {
-                result += ",?"
+            for (int i = 0; i < count; i++) {
+                result += ",?";
             }
             result = result.substring(1);
         }

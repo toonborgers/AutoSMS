@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import be.borgers.autosms.db.SMSEntryDBHelper;
 import be.borgers.autosms.domain.AutoSMSEntry;
+import be.borgers.autosms.domain.ParcelableContact;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -26,6 +29,7 @@ import static be.borgers.autosms.MainActivity.REQUEST_MODIFY;
 
 public class ItemDetailActivity extends Activity {
     private static final int GET_CONTACT = 1;
+    private static final int GET_CONTACTS = 2;
 
     @InjectView(R.id.add_et_naam)
     EditText et_naam;
@@ -105,27 +109,35 @@ public class ItemDetailActivity extends Activity {
             Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
             intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
             startActivityForResult(intent, GET_CONTACT);
-        }else{
-            startActivity(new Intent(this, SelectContactsActivity.class));
+        } else {
+            startActivityForResult(new Intent(this, SelectContactsActivity.class), GET_CONTACTS);
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GET_CONTACT && resultCode == Activity.RESULT_OK) {
-            Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
-            if (cursor.moveToFirst()) {
-                int index = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
-                if (cursor.getInt(index) == 1) {
-                    index = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-                    et_naam.setText(cursor.getString(index));
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GET_CONTACT) {
+                Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
+                    if (cursor.getInt(index) == 1) {
+                        index = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+                        et_naam.setText(cursor.getString(index));
 
-                    index = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-                    getNumber(cursor.getInt(index));
+                        index = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+                        getNumber(cursor.getInt(index));
+                    }
+                }
+                cursor.close();
+            } else if (requestCode == GET_CONTACTS) {
+                if (data.hasExtra(SelectContactsActivity.SELECTED_CONTACTS)) {
+                    for (Parcelable parcelable : data.getParcelableArrayListExtra(SelectContactsActivity.SELECTED_CONTACTS)) {
+                        Log.e("XXXX", ((ParcelableContact) parcelable).getContact().toString());
+                    }
                 }
             }
-            cursor.close();
         }
     }
 
